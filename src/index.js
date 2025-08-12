@@ -113,7 +113,7 @@ export default {
 			'Content-Type': 'application/json'
 		  },
 		  body: JSON.stringify({
-			from: 'Brief <noreply@brief.danielensign.com>',
+			from: 'Brief <notify@brief.danielensign.com>',
 			to: [email],
 			subject: `${getWebsiteName(site)}: ${title}`,
 			html: emailHTML
