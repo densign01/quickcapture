@@ -184,16 +184,59 @@ export default {
 		return generateTitleBasedSummary(apiKey, title, url, summaryLength);
 	  }
   
-	  const prompt = `
-		Article Title: ${title}
-		Article URL: ${url}
-		
-		Content: ${textContent}
-		
-		Please provide a ${summaryLength === 'short' ? '3 bullet point (or fewer)' : 'up to 7 bullet point'} summary of this article.
-		Format as bullet points, one per line, without bullet symbols.
-		Be concise and informative.
-		Do not include any preamble like "Here is a summary" - just start with the bullet points directly.
+	  const prompt = summaryLength === 'short' ? `
+You are a professional news summarizer. Create a concise 3-bullet summary of this article for busy executives.
+
+RULES:
+- Read and understand the full article before summarizing
+- Capture only material facts from the text — no speculation or outside sources
+- Use neutral, factual language without editorializing adjectives
+- Use present tense for ongoing events, past tense for completed events
+- Each bullet should be self-contained and understandable without the full article
+
+STRUCTURE:
+1. Main event – Who, what, when, why it matters
+2. Key actions or players – Major steps taken, partnerships, political/lobbying context
+3. Implications – Potential impact, stakes, or controversy
+
+FORMAT:
+- 3 bullets total
+- 1-2 sentences each
+- 20-35 words per bullet
+- Use "–" to separate the topic from details (e.g., "Topic – Details here")
+
+Article Title: ${title}
+Article URL: ${url}
+Content: ${textContent}
+	  ` : `
+You are a professional news summarizer. Create a detailed 6-bullet summary of this article for informed readers who want comprehensive understanding.
+
+RULES:
+- Read and understand the full article before summarizing
+- Capture only material facts from the text — no speculation or outside sources
+- Use neutral, factual language without editorializing adjectives
+- Condense multiple related sentences into single concise bullets where possible
+- Use present tense for ongoing events, past tense for completed events
+- Each bullet should be self-contained and focus on one theme
+
+STRUCTURE:
+1. Main event and context – Introduce central figure/event with relevant background
+2. Key background facts – Past legal actions or milestones leading to the event
+3. Current actions – Lobbying, business deals, or alliances described in the article
+4. Political/legal environment – Reactions from political figures, government bodies, or regulators
+5. Stakes and potential outcomes – What could happen if the event proceeds
+6. Industry/competitive impact – How it could affect rivals, markets, or broader trends
+
+FORMAT:
+- 6 bullets total
+- 2-3 sentences each
+- 30-50 words per bullet
+- Use "–" to separate the topic from details (e.g., "Topic – Details here")
+- Maintain logical flow from core event to implications
+
+Article Title: ${title}
+Article URL: ${url}
+Content: ${textContent}
 	  `;
   
 	  const response = await fetch('https://api.anthropic.com/v1/messages', {
