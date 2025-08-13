@@ -1,4 +1,4 @@
-import { runAppleScript } from '@raycast/utils';
+import { runAppleScript } from "@raycast/utils";
 
 export async function getCurrentURL(): Promise<string> {
 	// Try Safari first (most common)
@@ -40,7 +40,7 @@ export async function getCurrentURL(): Promise<string> {
 			return result.trim();
 		} catch (chromeError) {
 			throw new Error(
-				'Failed to get URL from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast.',
+				"Failed to get URL from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast."
 			);
 		}
 	}
@@ -86,7 +86,7 @@ export async function getPageTitle(): Promise<string> {
 			return result.trim();
 		} catch (chromeError) {
 			throw new Error(
-				'Failed to get page title from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast.',
+				"Failed to get page title from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast."
 			);
 		}
 	}

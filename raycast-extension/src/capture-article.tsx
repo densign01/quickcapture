@@ -1,19 +1,26 @@
-import { Action, ActionPanel, Detail, getPreferenceValues, showToast, Toast } from '@raycast/api';
-import { useEffect, useState } from 'react';
-import { getCurrentURL, getPageTitle } from './utils/browser';
+import {
+	Action,
+	ActionPanel,
+	Detail,
+	getPreferenceValues,
+	showToast,
+	Toast,
+} from "@raycast/api";
+import { useEffect, useState } from "react";
+import { getCurrentURL, getPageTitle } from "./utils/browser";
 
 interface Preferences {
 	email: string;
 	apiEndpoint: string;
 	defaultAiSummary: boolean;
-	summaryLength: 'short' | 'long';
+	summaryLength: "short" | "long";
 }
 
 export default function CaptureArticle() {
-	const [url, setUrl] = useState<string>('');
-	const [title, setTitle] = useState<string>('');
+	const [url, setUrl] = useState<string>("");
+	const [title, setTitle] = useState<string>("");
 	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string>('');
+	const [error, setError] = useState<string>("");
 
 	const preferences = getPreferenceValues<Preferences>();
 
@@ -27,7 +34,7 @@ export default function CaptureArticle() {
 				setTitle(pageTitle);
 				setIsLoading(false);
 			} catch (error) {
-				setError('Failed to get current page information');
+				setError("Failed to get current page information");
 				setIsLoading(false);
 			}
 		}
@@ -35,25 +42,29 @@ export default function CaptureArticle() {
 		fetchCurrentPage();
 	}, []);
 
-	async function sendToBrief(options: { aiSummary: boolean; summaryLength: 'short' | 'long'; context?: string }) {
+	async function sendToBrief(options: {
+		aiSummary: boolean;
+		summaryLength: "short" | "long";
+		context?: string;
+	}) {
 		try {
 			const toast = await showToast({
 				style: Toast.Style.Animated,
-				title: 'Sending article...',
+				title: "Sending article...",
 			});
 
 			const site = new URL(url).hostname;
 
 			const response = await fetch(preferences.apiEndpoint, {
-				method: 'POST',
+				method: "POST",
 				headers: {
-					'Content-Type': 'application/json',
+					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
 					url,
 					title,
 					site,
-					context: options.context || '',
+					context: options.context || "",
 					aiSummary: options.aiSummary,
 					summaryLength: options.summaryLength,
 					email: preferences.email,
@@ -68,22 +79,24 @@ export default function CaptureArticle() {
 
 			if (result.success) {
 				toast.style = Toast.Style.Success;
-				toast.title = 'Article sent successfully!';
+				toast.title = "Article sent successfully!";
 				toast.message = `Sent to ${preferences.email}`;
 			} else {
-				throw new Error(result.error || 'Unknown error occurred');
+				throw new Error(result.error || "Unknown error occurred");
 			}
 		} catch (error) {
 			await showToast({
 				style: Toast.Style.Failure,
-				title: 'Failed to send article',
-				message: error instanceof Error ? error.message : 'Unknown error',
+				title: "Failed to send article",
+				message: error instanceof Error ? error.message : "Unknown error",
 			});
 		}
 	}
 
 	if (isLoading) {
-		return <Detail isLoading={true} markdown="Loading current page information..." />;
+		return (
+			<Detail isLoading={true} markdown="Loading current page information..." />
+		);
 	}
 
 	if (error) {
@@ -91,7 +104,9 @@ export default function CaptureArticle() {
 	}
 
 	if (!url || !title) {
-		return <Detail markdown="# No Active Page\n\nPlease open a webpage in your browser first." />;
+		return (
+			<Detail markdown="# No Active Page\n\nPlease open a webpage in your browser first." />
+		);
 	}
 
 	const site = new URL(url).hostname;
@@ -131,7 +146,7 @@ Ready to capture and send this article with AI summary.`;
 						onAction={() =>
 							sendToBrief({
 								aiSummary: true,
-								summaryLength: 'short',
+								summaryLength: "short",
 							})
 						}
 					/>
@@ -140,7 +155,7 @@ Ready to capture and send this article with AI summary.`;
 						onAction={() =>
 							sendToBrief({
 								aiSummary: true,
-								summaryLength: 'long',
+								summaryLength: "long",
 							})
 						}
 					/>
