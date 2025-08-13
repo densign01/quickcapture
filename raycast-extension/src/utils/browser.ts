@@ -39,7 +39,9 @@ export async function getCurrentURL(): Promise<string> {
 			const result = await runAppleScript(chromeScript);
 			return result.trim();
 		} catch (chromeError) {
-			throw new Error('Failed to get URL from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast.');
+			throw new Error(
+				'Failed to get URL from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast.',
+			);
 		}
 	}
 }
@@ -83,7 +85,9 @@ export async function getPageTitle(): Promise<string> {
 			const result = await runAppleScript(chromeScript);
 			return result.trim();
 		} catch (chromeError) {
-			throw new Error('Failed to get page title from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast.');
+			throw new Error(
+				'Failed to get page title from Safari or Chrome. Make sure you have a webpage open and have granted accessibility permissions to Raycast.',
+			);
 		}
 	}
 }
