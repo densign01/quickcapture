@@ -1,4 +1,4 @@
-# Brief Raycast Extension
+# Brief - Send Links with AI Summary
 
 A Raycast extension for [Brief](https://github.com/densign01/quickcapture) - capture and email article summaries with AI.
 
