@@ -100,7 +100,7 @@ export default {
 			${summaryHTML}
 			
 			<div style="color: #999; font-size: 14px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e5e5;">
-			  Sent via QuickCapture
+			  Sent from Brief
 			</div>
 		  </div>
 		`;
