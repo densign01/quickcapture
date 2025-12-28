@@ -60,10 +60,21 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 
 ## Backlog
 
-### Issue: Missing Article Metadata from App Shares
+### ✅ FIXED: Missing Article Metadata from App Shares
 - When sharing from NYT app, title and publication are not extracted
-- Email shows "Shared Link" instead of article title
-- Need to improve metadata extraction from share extension input
+- **Fix:** Share extension now fetches page and extracts og:title/twitter:title/<title>
+- Commit: `64fc202`
+
+### ✅ FIXED: Hide API Endpoint from Settings
+- API Endpoint field is exposed in Settings UI (unnecessary for end users)
+- **Fix:** Removed from UI, keeps hardcoded default
+- Commit: `64fc202`
+
+### Issue: Brief Not Visible in Share Sheet from Certain Apps
+- Brief doesn't appear in share sheet when sharing from NYT app (works from Safari/NYT.com)
+- Likely related to supported UTIs (Uniform Type Identifiers) in extension Info.plist
+- Some apps share different content types than Safari
+- Need to investigate what content types the NYT app shares and add support
 
 ### Issue: Paywall Bypass for AI Summaries  
 - Paywalled content (e.g., NYT) returns "Article content was behind a paywall - no summary available"
@@ -74,11 +85,33 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
   - Headless browser rendering
   - User-provided content paste
 
-### Task: Hide API Endpoint from Settings
-- API Endpoint field is exposed in Settings UI (unnecessary for end users)
-- Keep hardcoded default, remove from user-facing settings
+### Task: New App Icon Design
+- Current icon needs refresh
+- Generate several new icon options to choose from
+- Should convey "quick capture", "reading", "email", or "summary" concepts
+
+### Task: UI Cleanup
+- Polish the main app and share extension UI
+- Improve visual design and user experience
+- Make it feel more premium/polished
+
+### Feature: Links Sent History
+- Add ability to see previously sent links
+- Track what articles have been captured
+- Would require backend storage or local persistence
+- Consider sync across devices
+
+### Exploration: Infrastructure Evaluation
+- Evaluate alternatives to current Cloudflare Workers + Resend setup
+- Firebase could provide:
+  - Authentication
+  - Firestore for history/sync
+  - Cloud Functions for API
+  - Push notifications
+- Compare cost, complexity, and feature tradeoffs
 
 ## Recent Commits
+- `64fc202` - Fix: Hide API endpoint from settings, add title fetching for share extension
 - App Groups capability enabled in Xcode (not in git - Xcode project change)
 - `783991b` - Add macOS Info.plist with app category for TestFlight
 - `2dde282` - Fix privacy policy (Anthropic) and add iOS app category for TestFlight
