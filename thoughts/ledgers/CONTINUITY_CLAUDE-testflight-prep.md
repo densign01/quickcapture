@@ -137,6 +137,17 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Can remove `OPENAI_API_KEY`, `OPENAI_MODEL`, `ANTHROPIC_API_KEY` from Cloudflare
 - Commit: `9126024`
 
+### Bug: AI Summary Not Generating for Some Articles
+- WSJ article showed "Summary could not be generated"
+- Title-based fallback also failing
+- Need to debug Gemini API calls and error handling
+- Check if SDK v3.0.1 fix resolved the issue or if there's another problem
+
+### Feature: Restore AI Summary Toggle in Share Sheet
+- AI summary toggle was removed to make share sheet compact
+- Consider adding it back as a small inline toggle
+- Currently defaults to user's saved preference (works, just not visible)
+
 ### Feature: Links Sent History
 - Add ability to see previously sent links
 - Track what articles have been captured
