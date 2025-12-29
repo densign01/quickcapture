@@ -41,13 +41,34 @@ export default {
 					const urlObj = new URL(url);
 					site = site || urlObj.hostname;
 
-					// Fetch the page to extract title if not provided
-					if (!title) {
+					// Special handling for X.com/Twitter (returns "JavaScript is not available")
+					if (urlObj.hostname === 'x.com' || urlObj.hostname === 'twitter.com' ||
+						urlObj.hostname === 'www.x.com' || urlObj.hostname === 'www.twitter.com') {
+						// Extract username from X URL pattern: /username/status/id
+						const pathParts = urlObj.pathname.split('/').filter(p => p);
+						if (pathParts.length >= 1) {
+							const username = pathParts[0];
+							title = title || `Post by @${username} on X`;
+							site = 'X';
+						} else {
+							title = title || 'Post on X';
+							site = 'X';
+						}
+					} else if (!title) {
+						// Fetch the page to extract title if not provided
 						const response = await fetch(url);
 						if (response.ok) {
 							const html = await response.text();
 							const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-							title = titleMatch ? titleMatch[1].trim() : urlObj.hostname;
+							let extractedTitle = titleMatch ? titleMatch[1].trim() : null;
+
+							// Check for bad titles (JS-required sites)
+							const badTitles = ['javascript is not available', 'just a moment', 'loading...', 'redirecting'];
+							if (extractedTitle && badTitles.some(bad => extractedTitle.toLowerCase().includes(bad))) {
+								extractedTitle = null;
+							}
+
+							title = extractedTitle || urlObj.hostname;
 						} else {
 							title = urlObj.hostname;
 						}

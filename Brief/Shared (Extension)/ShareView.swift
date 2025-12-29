@@ -1,5 +1,11 @@
 import SwiftUI
 
+// MARK: - Theme Colors (Shared Extension)
+private extension Color {
+    static let briefPrimary = Color(red: 0.388, green: 0.275, blue: 0.878) // #6346E0 - Indigo
+    static let briefSecondary = Color(red: 0.576, green: 0.333, blue: 0.914) // #9355E9 - Purple
+}
+
 /// Shared SwiftUI view for the Share Extension
 /// Works on both iOS and macOS
 struct ShareView: View {
@@ -29,120 +35,229 @@ struct ShareView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 0) {
             // Header
-            HStack {
+            headerSection
+            
+            Divider()
+            
+            // Content
+            ScrollView {
+                VStack(spacing: 16) {
+                    articleInfoSection
+                    contextInputSection
+                    aiSummarySection
+                    
+                    if let error = errorMessage {
+                        errorSection(error)
+                    }
+                }
+                .padding(20)
+            }
+            
+            Divider()
+            
+            // Footer with send button
+            sendButtonSection
+        }
+        #if os(iOS)
+        .background(Color(.systemBackground))
+        #endif
+    }
+    
+    // MARK: - Header
+    private var headerSection: some View {
+        HStack {
+            HStack(spacing: 10) {
+                // Mini app icon
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(LinearGradient(
+                            colors: [.briefPrimary, .briefSecondary],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ))
+                        .frame(width: 32, height: 32)
+                    
+                    Image(systemName: "doc.text.fill")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                }
+                
                 Text("Brief")
                     .font(.headline)
-                Spacer()
-                Button("Cancel") {
-                    onCancel()
-                }
-                #if os(iOS)
-                .foregroundColor(.blue)
-                #endif
+                    .fontWeight(.semibold)
             }
-            .padding(.bottom, 8)
-
-            // Article info
-            VStack(alignment: .leading, spacing: 8) {
+            
+            Spacer()
+            
+            Button(action: onCancel) {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(.gray.opacity(0.6))
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 14)
+    }
+    
+    // MARK: - Article Info
+    private var articleInfoSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Article", systemImage: "link")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            VStack(alignment: .leading, spacing: 6) {
                 Text(pageTitle.isEmpty ? "Shared Link" : pageTitle)
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .lineLimit(2)
+                    .foregroundColor(.primary)
 
                 Text(url)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.briefPrimary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(12)
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(8)
+            .padding(14)
+            .background(
+                LinearGradient(
+                    colors: [Color.briefPrimary.opacity(0.06), Color.briefSecondary.opacity(0.04)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.briefPrimary.opacity(0.15), lineWidth: 1)
+            )
+        }
+    }
+    
+    // MARK: - Context Input
+    private var contextInputSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label("Personal Note", systemImage: "note.text")
+                .font(.caption)
+                .foregroundColor(.secondary)
 
-            // Context/note input
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Note (optional)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                #if os(iOS)
-                TextField("Add a personal note...", text: $context, axis: .vertical)
-                    .lineLimit(2...4)
-                    .textFieldStyle(.roundedBorder)
-                #else
-                TextEditor(text: $context)
-                    .frame(height: 50)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                    )
-                #endif
-            }
-
-            // AI Summary toggle
-            VStack(alignment: .leading, spacing: 8) {
-                Toggle("AI Summary", isOn: $aiSummaryEnabled)
+            #if os(iOS)
+            TextField("Add a note for yourself...", text: $context, axis: .vertical)
+                .lineLimit(2...4)
+                .padding(12)
+                .background(Color.gray.opacity(0.08))
+                .cornerRadius(10)
+            #else
+            TextEditor(text: $context)
+                .frame(height: 50)
+                .padding(4)
+                .background(Color.gray.opacity(0.08))
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.gray.opacity(0.15), lineWidth: 1)
+                )
+            #endif
+        }
+    }
+    
+    // MARK: - AI Summary Section
+    private var aiSummarySection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                HStack(spacing: 6) {
+                    Image(systemName: "sparkles")
+                        .foregroundColor(.briefPrimary)
+                        .font(.caption)
+                    Text("AI Summary")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                
+                Spacer()
+                
+                Toggle("", isOn: $aiSummaryEnabled)
+                    .toggleStyle(SwitchToggleStyle(tint: .briefPrimary))
+                    .labelsHidden()
                     .onChange(of: aiSummaryEnabled) { _, newValue in
                         savePreference(key: "aiSummaryEnabled", value: newValue)
                     }
+            }
 
-                if aiSummaryEnabled {
-                    Picker("Length", selection: $summaryLength) {
-                        Text("Short").tag("short")
-                        Text("Long").tag("long")
-                    }
-                    .pickerStyle(.segmented)
-                    .onChange(of: summaryLength) { _, newValue in
-                        savePreference(key: "summaryLength", value: newValue)
-                    }
+            if aiSummaryEnabled {
+                Picker("Length", selection: $summaryLength) {
+                    Text("Short").tag("short")
+                    Text("Detailed").tag("long")
+                }
+                .pickerStyle(.segmented)
+                .onChange(of: summaryLength) { _, newValue in
+                    savePreference(key: "summaryLength", value: newValue)
                 }
             }
-
-            // Error message
-            if let error = errorMessage {
-                Text(error)
-                    .font(.caption)
-                    .foregroundColor(.red)
-                    .padding(8)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.red.opacity(0.1))
-                    .cornerRadius(6)
-            }
-
-            Spacer()
-
-            // Send button
-            Button(action: {
-                isLoading = true
-                errorMessage = nil
-                onSend(
-                    context.isEmpty ? nil : context,
-                    aiSummaryEnabled,
-                    summaryLength
-                )
-            }) {
-                HStack {
-                    if isLoading {
-                        ProgressView()
-                            .scaleEffect(0.8)
-                            #if os(iOS)
-                            .tint(.white)
-                            #endif
-                    }
-                    Text(isLoading ? "Sending..." : "Send to Email")
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
-            }
-            .buttonStyle(.borderedProminent)
-            .disabled(isLoading)
         }
+        .padding(12)
+        .background(Color.gray.opacity(0.04))
+        .cornerRadius(10)
+    }
+    
+    // MARK: - Error Section
+    private func errorSection(_ error: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundColor(.red)
+            Text(error)
+                .font(.caption)
+                .foregroundColor(.red)
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.red.opacity(0.08))
+        .cornerRadius(10)
+    }
+    
+    // MARK: - Send Button
+    private var sendButtonSection: some View {
+        Button(action: {
+            isLoading = true
+            errorMessage = nil
+            onSend(
+                context.isEmpty ? nil : context,
+                aiSummaryEnabled,
+                summaryLength
+            )
+        }) {
+            HStack(spacing: 10) {
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(0.85)
+                }
+                Text(isLoading ? "Sending..." : "Send to Email")
+                    .fontWeight(.semibold)
+                if !isLoading {
+                    Image(systemName: "paperplane.fill")
+                        .font(.caption)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 14)
+            .background(
+                LinearGradient(
+                    colors: isLoading ? [.gray.opacity(0.4), .gray.opacity(0.3)] : [.briefPrimary, .briefSecondary],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .foregroundColor(.white)
+            .cornerRadius(12)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .disabled(isLoading)
         .padding(20)
-        #if os(iOS)
-        .background(Color(.systemBackground))
-        #endif
     }
 
     private func savePreference(key: String, value: Any) {
