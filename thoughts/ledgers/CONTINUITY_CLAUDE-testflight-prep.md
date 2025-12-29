@@ -126,6 +126,14 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Hint text showing keyboard shortcut
 - Commit: `1faa623`
 
+### ✅ SWITCHED: AI Provider to Gemini 2.5 Flash (2024-12-28)
+- Migrated from OpenAI GPT-4o-mini to Google Gemini 2.5 Flash
+- Updated `@ai-sdk/openai` → `@ai-sdk/google` in package.json
+- Model: `gemini-2.5-flash`
+- Pricing: $0.30/1M input, $2.50/1M output
+- Added `GOOGLE_API_KEY` to Cloudflare secrets
+- Can remove `OPENAI_API_KEY`, `OPENAI_MODEL`, `ANTHROPIC_API_KEY` from Cloudflare
+
 ### Feature: Links Sent History
 - Add ability to see previously sent links
 - Track what articles have been captured

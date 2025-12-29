@@ -41,19 +41,17 @@ struct ShareView: View {
             
             Divider()
             
-            // Content
-            ScrollView {
-                VStack(spacing: 16) {
-                    articleInfoSection
-                    contextInputSection
-                    aiSummarySection
-                    
-                    if let error = errorMessage {
-                        errorSection(error)
-                    }
+            // Content (no scroll needed for compact layout)
+            VStack(spacing: 12) {
+                articleInfoSection
+                contextInputSection
+
+                if let error = errorMessage {
+                    errorSection(error)
                 }
-                .padding(20)
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
             
             Divider()
             
@@ -174,15 +172,11 @@ struct ShareView: View {
                 .background(Color.gray.opacity(0.08))
                 .cornerRadius(10)
             #else
-            TextEditor(text: $context)
-                .frame(height: 50)
-                .padding(4)
+            TextField("Add a note...", text: $context)
+                .textFieldStyle(PlainTextFieldStyle())
+                .padding(10)
                 .background(Color.gray.opacity(0.08))
                 .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray.opacity(0.15), lineWidth: 1)
-                )
             #endif
         }
     }
@@ -279,7 +273,8 @@ struct ShareView: View {
                 .foregroundColor(.secondary)
             #endif
         }
-        .padding(20)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 14)
     }
 
     private func savePreference(key: String, value: Any) {

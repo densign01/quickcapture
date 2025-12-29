@@ -279,7 +279,7 @@ struct ContentView: View {
                     .frame(maxWidth: 180)
                 }
                 
-                Text("Powered by Claude AI • Generates key bullet points")
+                Text("Powered by Gemini • Generates key bullet points")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -522,7 +522,7 @@ struct SettingsView: View {
                             .foregroundColor(.primary)
                         
                         VStack(alignment: .leading, spacing: 8) {
-                            aboutRow(icon: "sparkles", text: "AI summaries powered by Claude")
+                            aboutRow(icon: "sparkles", text: "AI summaries powered by Gemini")
                             aboutRow(icon: "lock.shield", text: "Email stored locally on device")
                             aboutRow(icon: "square.and.arrow.up", text: "Use Share menu for faster capture")
                         }

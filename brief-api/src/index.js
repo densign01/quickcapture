@@ -1,5 +1,5 @@
 import { generateText } from 'ai';
-import { createOpenAI } from '@ai-sdk/openai';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
 export default {
 	async fetch(request, env, ctx) {
@@ -320,19 +320,17 @@ Article URL: ${url}
 Content: ${textContent}
 	  `;
 
-		// Use OpenAI via AI SDK. Model configurable via OPENAI_MODEL
-		if (!env.OPENAI_API_KEY) {
-			throw new Error('Missing OPENAI_API_KEY');
+		// Use Google Gemini via AI SDK
+		if (!env.GOOGLE_API_KEY) {
+			throw new Error('Missing GOOGLE_API_KEY');
 		}
 
-		const openai = createOpenAI({
-			apiKey: env.OPENAI_API_KEY,
+		const google = createGoogleGenerativeAI({
+			apiKey: env.GOOGLE_API_KEY,
 		});
 
-		const modelName = env.OPENAI_MODEL || 'gpt-5-nano';
-
 		const { text } = await generateText({
-			model: openai(modelName),
+			model: google('gemini-2.5-flash'),
 			prompt,
 			maxTokens: 500,
 		});
@@ -474,18 +472,16 @@ URL: ${url}
   `;
 
 	try {
-		if (!env.OPENAI_API_KEY) {
-			throw new Error('Missing OPENAI_API_KEY');
+		if (!env.GOOGLE_API_KEY) {
+			throw new Error('Missing GOOGLE_API_KEY');
 		}
 
-		const openai = createOpenAI({
-			apiKey: env.OPENAI_API_KEY,
+		const google = createGoogleGenerativeAI({
+			apiKey: env.GOOGLE_API_KEY,
 		});
 
-		const modelName = env.OPENAI_MODEL || 'gpt-5-nano';
-
 		const { text } = await generateText({
-			model: openai(modelName),
+			model: google('gemini-2.5-flash'),
 			prompt,
 			maxTokens: 300,
 		});
