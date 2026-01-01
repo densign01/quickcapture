@@ -525,6 +525,13 @@ struct SettingsView: View {
                             aboutRow(icon: "sparkles", text: "AI summaries powered by Gemini")
                             aboutRow(icon: "lock.shield", text: "Email stored locally on device")
                             aboutRow(icon: "square.and.arrow.up", text: "Use Share menu for faster capture")
+                            
+                            Button(action: { userPreferences.hasCompletedOnboarding = false }) {
+                                aboutRow(icon: "arrow.counterclockwise", text: "Reset Onboarding Flow")
+                                    .foregroundColor(.briefPrimary)
+                            }
+                            .buttonStyle(.plain)
+                            .padding(.top, 8)
                         }
                         .padding(14)
                         .background(Color.gray.opacity(0.04))

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brief Setup | Enable Safari Extension</title>
+    <style>
+        :root {
+            --primary: #6346E0;
+            --background: #F9F8FC;
+            --text: #1D1D1F;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            background: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 18px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .steps {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .num {
+            background: #eee;
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 16px 30px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                <path
+                    d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" />
+            </svg>
+        </div>
+        <h1>Enable Brief</h1>
+        <p>Follow these steps to use Brief in Safari</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="num">1</div><span>Tap <b>Share</b> in Safari</span>
+            </div>
+            <div class="step">
+                <div class="num">2</div><span>Scroll to the bottom and tap <b>Edit Actions</b></span>
+            </div>
+            <div class="step">
+                <div class="num">3</div><span>Find <b>Brief</b> and toggle it <b>ON</b></span>
+            </div>
+        </div>
+
+        <a href="brief://setup-complete" class="btn">Finish Setup & Open Brief</a>
+    </div>
+
+    <div style="margin-top: 40px; font-size: 12px; color: #999;">
+        <a href="index.html" style="color: inherit;">Home</a> | <a href="privacy.html"
+            style="color: inherit;">Privacy</a>
+    </div>
+</body>
+
+</html>

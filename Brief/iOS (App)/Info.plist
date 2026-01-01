@@ -6,6 +6,17 @@
 	<string>public.app-category.productivity</string>
 	<key>CFBundleDisplayName</key>
 	<string>Brief</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>brief</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.danielensign.Brief</string>
+		</dict>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>
