@@ -81,7 +81,9 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 
 ### Phase 8: Polish & Bug Fixes [COMPLETE - 2025-01-01]
 - [x] Change "article" → "link" terminology throughout UI (13 text changes)
-- [x] Fix LinkedIn double-encoded HTML entities (`&amp;#39;` → `'`)
+- [x] Fix LinkedIn double-encoded HTML entities in app (`&amp;#39;` → `'`) - Xcode
+- [x] Fix newlines in email subject for multi-line LinkedIn posts - Wrangler
+- [x] Add HTML entity decoding on API side for cleaner emails - Wrangler
 - [x] All changes pushed to GitHub
 - [ ] Build and upload new TestFlight
 
@@ -196,12 +198,13 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Updated API `from` address: `onboarding@resend.dev` → `brief@send-brief.com`
 - Deployed to Cloudflare Workers
 
-### ✅ FIXED: LinkedIn Double-Encoded HTML Entities (2025-01-01)
-- LinkedIn shares text with double-encoded entities (`&amp;#39;` instead of `&#39;`)
-- Title displayed as `I&amp;#39;m` instead of `I'm`
-- **Fix:** Updated `htmlDecoded` to decode twice for double-encoded content
-- Applied to both iOS and macOS share extensions
-- Commit: `f796cb7`
+### ✅ FIXED: LinkedIn Sharing Issues (2025-01-01)
+- **Double-encoded HTML entities** - Title showed `I&amp;#39;m` instead of `I'm`
+  - App fix: Updated `htmlDecoded` to decode twice (Xcode) - `f796cb7`
+  - API fix: Added `decodeHTMLEntities()` on Cloudflare side - `26d366a`
+- **Newlines in email subject** - Multi-line LinkedIn posts broke email sending
+  - Fix: Strip `\n` from subject line on API - `e451141`
+- Applied to both iOS/macOS extensions and Cloudflare Workers
 
 ### ✅ CHANGED: "Article" to "Link" Terminology (2025-01-01)
 - Changed all user-facing "article" text to "link" for broader content support
@@ -243,6 +246,8 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Compare cost, complexity, and feature tradeoffs
 
 ## Recent Commits
+- `26d366a` - Add HTML entity decoding on API side for cleaner email titles
+- `e451141` - Fix: strip newlines from email subject for multi-line LinkedIn posts
 - `f796cb7` - Fix double-encoded HTML entities from LinkedIn shares
 - `3025fa1` - Change 'article' to 'link' throughout UI for broader content types
 - `d3e9412` - Update ledger: onboarding flow complete, pending TestFlight build
