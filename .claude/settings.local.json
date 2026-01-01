@@ -65,7 +65,14 @@
       "Bash(for:*)",
       "Bash(do)",
       "Bash(convert \"$f\" -background white -alpha remove -alpha off \"$f\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Skill(perplexity-search)",
+      "Bash(uv run:*)",
+      "Bash(npm info:*)",
+      "Skill(continuity_ledger)",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(timeout 60 wrangler tail:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }

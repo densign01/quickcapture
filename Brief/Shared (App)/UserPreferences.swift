@@ -29,10 +29,17 @@ class UserPreferences: ObservableObject {
         }
     }
     
+    @Published var hasCompletedOnboarding: Bool {
+        didSet {
+            userDefaults.set(hasCompletedOnboarding, forKey: "hasCompletedOnboarding")
+        }
+    }
+    
     private init() {
         self.email = userDefaults.string(forKey: "email") ?? ""
         self.apiEndpoint = userDefaults.string(forKey: "apiEndpoint") ?? "https://quickcapture-api.daniel-ensign.workers.dev"
         self.aiSummaryEnabled = userDefaults.bool(forKey: "aiSummaryEnabled")
         self.summaryLength = userDefaults.string(forKey: "summaryLength") ?? "short"
+        self.hasCompletedOnboarding = userDefaults.bool(forKey: "hasCompletedOnboarding")
     }
 }

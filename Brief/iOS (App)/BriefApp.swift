@@ -13,8 +13,13 @@ struct BriefApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(userPreferences)
+            if userPreferences.hasCompletedOnboarding {
+                ContentView()
+                    .environmentObject(userPreferences)
+            } else {
+                OnboardingView()
+                    .environmentObject(userPreferences)
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 # Continuity Ledger: Brief TestFlight Prep
-Updated: 2025-12-30
+Updated: 2025-12-31
 
 ## Goal
 Streamline the Brief project and prepare iOS/macOS app for TestFlight submission.
@@ -59,13 +59,13 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - [x] Add Escape to cancel on macOS
 - [x] Commit: `1faa623`
 
-## Status: ⏳ EXTERNAL BETA SUBMISSION IN PROGRESS
+## Status: ✅ TESTFLIGHT LIVE WITH EXTERNAL TESTERS
 
-### Phase 6: External TestFlight Beta [IN PROGRESS - 2025-12-29]
+### Phase 6: External TestFlight Beta [COMPLETE - 2025-12-31]
 - [x] Create external testing group ("Friends & Family")
-- [→] Submit build for Beta App Review
-- [ ] Await Beta App Review approval (24-48 hours)
-- [ ] Distribute public link or invite testers
+- [x] Submit build for Beta App Review
+- [x] Beta App Review approved
+- [x] Distribute to testers
 
 **Test Information Prepared:**
 - What to Test: Core sharing flow, AI summaries, X/Twitter links, keyboard shortcuts
@@ -74,6 +74,7 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 ## Open Questions
 - [x] Are bundle IDs registered in Apple Developer portal? YES
 - [x] Is there a privacy policy URL for App Store Connect? YES → `https://densign01.github.io/quickcapture/privacy.html`
+- [x] Register `send-brief.com` via Cloudflare → verify with Resend → update API from address
 
 ## Working Set
 - `Brief/Brief.xcodeproj` - Main Xcode project
@@ -168,6 +169,12 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Applied to both iOS and macOS share extensions
 - Decodes titles from: plain text, property list, og:title, twitter:title, `<title>` tag
 - Commit: pending
+
+### ✅ FIXED: Resend Domain Verification for External Testers (2025-12-31)
+- Registered `send-brief.com` domain via Cloudflare
+- Verified domain with Resend
+- Updated API `from` address: `onboarding@resend.dev` → `brief@send-brief.com`
+- Deployed to Cloudflare Workers
 
 ### ✅ ADDED: Tweet Content Extraction via oEmbed (2025-12-29)
 - X/Twitter shares were showing AI-generated guesses instead of actual tweet text

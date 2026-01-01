@@ -45,6 +45,7 @@ struct ShareView: View {
             VStack(spacing: 12) {
                 articleInfoSection
                 contextInputSection
+                aiSummarySection
 
                 if let error = errorMessage {
                     errorSection(error)
