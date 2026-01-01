@@ -1,3 +1,24 @@
+// Decode HTML entities (handles double-encoding by running twice)
+function decodeHTMLEntities(text) {
+	if (!text) return text;
+	const entities = {
+		'&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"',
+		'&#39;': "'", '&#x27;': "'", '&apos;': "'",
+		'&#x2019;': "'", '&#8217;': "'", // Right single quote
+		'&#x201c;': '"', '&#x201d;': '"', // Curly double quotes
+		'&#8220;': '"', '&#8221;': '"',
+		'&nbsp;': ' ', '&#160;': ' ',
+	};
+	let decoded = text;
+	// Run twice to handle double-encoding (e.g., &amp;#39; → &#39; → ')
+	for (let i = 0; i < 2; i++) {
+		for (const [entity, char] of Object.entries(entities)) {
+			decoded = decoded.split(entity).join(char);
+		}
+	}
+	return decoded;
+}
+
 export default {
 	async fetch(request, env, ctx) {
 		// Handle CORS
@@ -18,6 +39,9 @@ export default {
 		try {
 			const data = await request.json();
 			let { url, title, site, context, aiSummary, summaryLength, email } = data;
+
+			// Decode HTML entities in title (handles double-encoding from LinkedIn, etc.)
+			title = decodeHTMLEntities(title);
 
 			// Validate required fields - now only URL and email are required
 			if (!url || !email) {
