@@ -59,7 +59,7 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - [x] Add Escape to cancel on macOS
 - [x] Commit: `1faa623`
 
-## Status: 🚀 ONBOARDING READY FOR TESTFLIGHT
+## Status: 🚀 READY FOR TESTFLIGHT BUILD
 
 ### Phase 6: External TestFlight Beta [COMPLETE - 2025-12-31]
 - [x] Create external testing group ("Friends & Family")
@@ -78,6 +78,11 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - [x] Add external setup guide link
 - [x] Test in iOS simulator - SUCCESS
 - [x] Merge to main and push to GitHub
+
+### Phase 8: Polish & Bug Fixes [COMPLETE - 2025-01-01]
+- [x] Change "article" → "link" terminology throughout UI (13 text changes)
+- [x] Fix LinkedIn double-encoded HTML entities (`&amp;#39;` → `'`)
+- [x] All changes pushed to GitHub
 - [ ] Build and upload new TestFlight
 
 **Test Information Prepared:**
@@ -191,6 +196,19 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Updated API `from` address: `onboarding@resend.dev` → `brief@send-brief.com`
 - Deployed to Cloudflare Workers
 
+### ✅ FIXED: LinkedIn Double-Encoded HTML Entities (2025-01-01)
+- LinkedIn shares text with double-encoded entities (`&amp;#39;` instead of `&#39;`)
+- Title displayed as `I&amp;#39;m` instead of `I'm`
+- **Fix:** Updated `htmlDecoded` to decode twice for double-encoded content
+- Applied to both iOS and macOS share extensions
+- Commit: `f796cb7`
+
+### ✅ CHANGED: "Article" to "Link" Terminology (2025-01-01)
+- Changed all user-facing "article" text to "link" for broader content support
+- 13 text changes across 3 files (ContentView, OnboardingStepViews, ShareView)
+- Better reflects support for tweets, Instagram posts, websites, etc.
+- Commit: `3025fa1`
+
 ### ✅ ADDED: 3-Step Onboarding Flow (2025-12-31)
 - Step 1: Email entry with validation (saves to UserPreferences)
 - Step 2: Enable extension instructions with setup guide link
@@ -225,6 +243,9 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Compare cost, complexity, and feature tradeoffs
 
 ## Recent Commits
+- `f796cb7` - Fix double-encoded HTML entities from LinkedIn shares
+- `3025fa1` - Change 'article' to 'link' throughout UI for broader content types
+- `d3e9412` - Update ledger: onboarding flow complete, pending TestFlight build
 - `6496040` - Merge onboarding flow into main
 - `056b0e9` - fix: use verified send-brief.com domain for email delivery
 - `b0393da` - feat: implement 3-step onboarding flow with realistic demo and setup guide
