@@ -1,5 +1,5 @@
 # Continuity Ledger: Brief TestFlight Prep
-Updated: 2025-12-31
+Updated: 2026-01-15
 
 ## Goal
 Streamline the Brief project and prepare iOS/macOS app for TestFlight submission.
@@ -59,8 +59,6 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - [x] Add Escape to cancel on macOS
 - [x] Commit: `1faa623`
 
-## Status: 🚀 READY FOR TESTFLIGHT BUILD
-
 ### Phase 6: External TestFlight Beta [COMPLETE - 2025-12-31]
 - [x] Create external testing group ("Friends & Family")
 - [x] Submit build for Beta App Review
@@ -85,11 +83,70 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - [x] Fix newlines in email subject for multi-line LinkedIn posts - Wrangler
 - [x] Add HTML entity decoding on API side for cleaner emails - Wrangler
 - [x] All changes pushed to GitHub
-- [ ] Build and upload new TestFlight
 
-**Test Information Prepared:**
-- What to Test: Onboarding flow, core sharing, AI summaries, X/Twitter links, keyboard shortcuts
-- License Agreement: Custom EULA provided (or use Apple's standard)
+### Phase 9: TestFlight Build [COMPLETE - 2026-01-02]
+**Build includes commits since `3025fa1`:**
+
+**App Changes:**
+| Commit | Change |
+|--------|--------|
+| `44e768d` | Let API extract page titles for product pages |
+| `21fabe2` | Skip onboarding if email already saved |
+| `f796cb7` | Fix double-encoded HTML entities (LinkedIn) |
+
+**API Changes (already deployed):**
+| Commit | Change |
+|--------|--------|
+| `26d366a` | HTML entity decoding on API side |
+| `e451141` | Strip newlines from email subject |
+
+**Testing Checklist:**
+- [x] Fresh install → onboarding flow appears
+- [x] Existing user with email → skips onboarding
+- [x] Share LinkedIn post with special chars → clean title
+- [x] Share multi-line LinkedIn post → email sends successfully
+- [x] Verify email subject line is clean (no encoded entities)
+- [x] Share product page → shows actual product name (not "Shared Link")
+
+**Build Status:**
+- [x] Archive iOS build
+- [x] Archive macOS build
+- [x] Upload to App Store Connect
+
+### Phase 10: App Store Release [IN PROGRESS - 2026-01-15]
+**Decision:** Launch as FREE app, add freemium later based on usage data
+
+**App Store Listing (Draft):**
+- **App Name:** Brief
+- **Subtitle:** Send links to your inbox
+- **Keywords:** read later,save articles,email,summary,AI,bookmark,links,share extension
+- **Description:**
+  > Brief makes it easy to save articles, links, and posts for later — delivered straight to your email.
+  >
+  > Share any link from Safari, X, LinkedIn, Instagram, or any app. Brief sends it to your inbox with an AI-generated summary so you can decide what's worth reading.
+  >
+  > **How it works:**
+  > 1. Tap Share on any link
+  > 2. Select Brief
+  > 3. Get an email with the link and summary
+  >
+  > No account needed. Just enter your email once and start saving.
+
+**Checklist:**
+- [x] Draft App Store listing copy
+- [ ] Review and finalize copy
+- [ ] Create iPhone 6.7" screenshots
+- [ ] Create iPhone 6.5" screenshots
+- [ ] Create Mac screenshots
+- [ ] Complete age rating questionnaire
+- [ ] Set price to Free
+- [ ] Add support URL
+- [ ] Submit for App Review
+
+**Future: Freemium Model (post-launch)**
+- Free tier: 10 links/month
+- Pro tier: Unlimited @ $2.99/month or $19.99/year
+- Requires: usage tracking, account/device ID, IAP integration, paywall UI
 
 ## Open Questions
 - [x] Are bundle IDs registered in Apple Developer portal? YES
@@ -206,6 +263,13 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
   - Fix: Strip `\n` from subject line on API - `e451141`
 - Applied to both iOS/macOS extensions and Cloudflare Workers
 
+### ✅ FIXED: Product Pages Showing "Shared Link" (2026-01-02)
+- Non-article links (e-commerce, product pages) showed generic "Shared Link" title
+- Root cause: App sent "Shared Link" fallback, blocking API from extracting real title
+- **Fix:** Send empty title to API, let API fetch og:title/twitter:title/<title>
+- Applied to both iOS and macOS share extensions
+- Commit: `44e768d`
+
 ### ✅ CHANGED: "Article" to "Link" Terminology (2025-01-01)
 - Changed all user-facing "article" text to "link" for broader content support
 - 13 text changes across 3 files (ContentView, OnboardingStepViews, ShareView)
@@ -246,6 +310,8 @@ Streamline the Brief project and prepare iOS/macOS app for TestFlight submission
 - Compare cost, complexity, and feature tradeoffs
 
 ## Recent Commits
+- `44e768d` - Let API extract page titles when app extraction fails
+- `21fabe2` - Skip onboarding when email is already saved
 - `26d366a` - Add HTML entity decoding on API side for cleaner email titles
 - `e451141` - Fix: strip newlines from email subject for multi-line LinkedIn posts
 - `f796cb7` - Fix double-encoded HTML entities from LinkedIn shares
