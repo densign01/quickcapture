@@ -1,5 +1,5 @@
 # Continuity Ledger: Brief App Store Release
-Updated: 2026-01-19T14:15:00-05:00
+Updated: 2026-01-20T06:45:00-05:00
 
 ## Goal
 ~~Streamline the Brief project and prepare iOS/macOS app for TestFlight submission.~~
@@ -136,7 +136,8 @@ Updated: 2026-01-19T14:15:00-05:00
 - [x] Submit for App Review ✅
 
 **Submitted:** 2026-01-17
-**Status:** Waiting for App Review
+**Status:** Rejected - typography contrast issues on iPad
+**Resubmitted:** 2026-01-20 (after Phase 11 fixes)
 
 **Infrastructure Setup:**
 - [x] Register send-brief.com domain (Cloudflare)
@@ -147,6 +148,32 @@ Updated: 2026-01-19T14:15:00-05:00
 - Free tier: 10 links/month
 - Pro tier: Unlimited @ $2.99/month or $19.99/year
 - Requires: usage tracking, account/device ID, IAP integration, paywall UI
+
+### Phase 11: Accessibility Contrast Fix [COMPLETE - 2026-01-20]
+**Issue:** Apple rejected app for "hard to read type or typography" on iPad
+
+**Root Cause:** Two contrast problems:
+1. `.foregroundColor(.secondary)` (medium gray) too light against lavender background (#F9F8FC)
+2. Disabled buttons used white text on light gray background
+
+**Fix:**
+- Added `briefSecondaryText` color (#595966) - darker gray for better contrast
+- Replaced all `.foregroundColor(.secondary)` with `.foregroundColor(.briefSecondaryText)`
+- Fixed disabled/loading button text: conditional gray instead of white
+
+**Files Modified:**
+| File | Changes |
+|------|---------|
+| ContentView.swift | 9 secondary colors + disabled button |
+| ShareView.swift | 3 secondary colors + loading button |
+| OnboardingView.swift | 1 secondary color |
+| OnboardingStepViews.swift | 7 secondary colors + disabled button |
+
+**Commits:**
+- `3335098` - Fix low contrast text for Apple accessibility review
+- `471b12c` - Fix contrast issues in share extension and onboarding views
+
+**Status:** Resubmitted to App Store Review 2026-01-20
 
 ## Open Questions
 - [x] Are bundle IDs registered in Apple Developer portal? YES
@@ -277,6 +304,14 @@ Updated: 2026-01-19T14:15:00-05:00
 - Also set up Cloudflare Email Routing for `help@send-brief.com` → Gmail
 - Commit: `2875b4d`
 
+### ✅ FIXED: Low Contrast Text for Accessibility (2026-01-20)
+- Apple rejected app for "hard to read type or typography" on iPad
+- `.foregroundColor(.secondary)` too light against lavender background
+- Disabled buttons had white text on light gray background
+- **Fix:** Added `briefSecondaryText` (#595966) color, fixed button text
+- 20 text color changes + 3 button fixes across 4 files
+- Commits: `3335098`, `471b12c`
+
 ### ✅ CHANGED: "Article" to "Link" Terminology (2025-01-01)
 - Changed all user-facing "article" text to "link" for broader content support
 - 13 text changes across 3 files (ContentView, OnboardingStepViews, ShareView)
@@ -317,6 +352,8 @@ Updated: 2026-01-19T14:15:00-05:00
 - Compare cost, complexity, and feature tradeoffs
 
 ## Recent Commits
+- `471b12c` - Fix contrast issues in share extension and onboarding views
+- `3335098` - Fix low contrast text for Apple accessibility review
 - `2875b4d` - Fix: Truncate email subjects to avoid Resend 2000 char limit
 - `0de668e` - Prepare docs for send-brief.com hosting
 - `039f2e8` - Add support page, update privacy policy for Gemini
