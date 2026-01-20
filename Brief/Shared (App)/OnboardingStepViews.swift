@@ -42,7 +42,7 @@ struct EmailStepView: View {
                 Text("AI-powered link summaries\ndelivered straight to your inbox")
                     .font(.subheadline)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.briefSecondaryText)
                     .padding(.horizontal)
             }
             .offset(y: isAnimating ? 0 : 20)
@@ -80,7 +80,7 @@ struct EmailStepView: View {
                             endPoint: .trailing
                         )
                     )
-                    .foregroundColor(.white)
+                    .foregroundColor(email.isValidEmail ? .white : .gray)
                     .cornerRadius(14)
                 }
                 .disabled(!email.isValidEmail)
@@ -115,7 +115,7 @@ struct EnableExtensionStepView: View {
             VStack(alignment: .leading, spacing: 16) {
                 Text("Sharing via Brief requires a one-time setup of the Safari Extension.")
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.briefSecondaryText)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 10)
                 
@@ -138,7 +138,7 @@ struct EnableExtensionStepView: View {
                 
                 Text("Or follow manually:")
                     .font(.caption.bold())
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.briefSecondaryText)
                     .padding(.top, 10)
 
                 VStack(alignment: .leading, spacing: 12) {
@@ -209,7 +209,7 @@ struct EnableExtensionStepView: View {
             
             Text(text)
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(.briefSecondaryText)
             
             Spacer()
         }
@@ -353,7 +353,7 @@ struct ShareDemoStepView: View {
                                 Spacer()
                                 Image(systemName: "arrow.clockwise").font(.system(size: 10))
                             }
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.briefSecondaryText)
                             .padding(.horizontal, 10)
                         )
                     Image(systemName: "plus")
@@ -373,7 +373,7 @@ struct ShareDemoStepView: View {
                     
                     Text("JANUARY 1, 2026")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.briefSecondaryText)
                     
                     Image(systemName: "photo.fill")
                         .resizable()
@@ -540,7 +540,7 @@ struct ShareDemoStepView: View {
                             .font(.title2.bold())
                         Text("Check your inbox for the key takeaways.")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.briefSecondaryText)
                             .multilineTextAlignment(.center)
                     }
                     .padding(.horizontal, 20)

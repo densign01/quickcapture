@@ -4,6 +4,7 @@ import SwiftUI
 private extension Color {
     static let briefPrimary = Color(red: 0.388, green: 0.275, blue: 0.878) // #6346E0 - Indigo
     static let briefSecondary = Color(red: 0.576, green: 0.333, blue: 0.914) // #9355E9 - Purple
+    static let briefSecondaryText = Color(red: 0.35, green: 0.35, blue: 0.4) // #595966 - Darker gray for accessibility
 }
 
 /// Shared SwiftUI view for the Share Extension
@@ -128,7 +129,7 @@ struct ShareView: View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Link", systemImage: "link")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(.briefSecondaryText)
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(pageTitle.isEmpty ? "Shared Link" : pageTitle)
@@ -164,7 +165,7 @@ struct ShareView: View {
         VStack(alignment: .leading, spacing: 6) {
             Label("Personal Note", systemImage: "note.text")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(.briefSecondaryText)
 
             #if os(iOS)
             TextField("Add a note for yourself...", text: $context, axis: .vertical)
@@ -262,7 +263,7 @@ struct ShareView: View {
                         endPoint: .trailing
                     )
                 )
-                .foregroundColor(.white)
+                .foregroundColor(isLoading ? .gray : .white)
                 .cornerRadius(12)
             }
             .buttonStyle(PlainButtonStyle())
@@ -271,7 +272,7 @@ struct ShareView: View {
             #if os(macOS)
             Text("⌘ Return to send")
                 .font(.caption2)
-                .foregroundColor(.secondary)
+                .foregroundColor(.briefSecondaryText)
             #endif
         }
         .padding(.horizontal, 20)

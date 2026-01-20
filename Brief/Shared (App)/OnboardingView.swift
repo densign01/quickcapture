@@ -73,7 +73,7 @@ struct OnboardingView: View {
                 if currentStep > 0 {
                     Button(action: { withAnimation { currentStep -= 1 } }) {
                         Text("Back")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.briefSecondaryText)
                     }
                     .buttonStyle(.plain)
                     .padding(.bottom, 20)
