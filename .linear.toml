@@ -1,0 +1,7 @@
+# Linear configuration for Brief project
+[team]
+key = "DEN"
+name = "Densign"
+
+[project]
+name = "brief"

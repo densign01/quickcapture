@@ -34,7 +34,8 @@ class ShareViewController: NSViewController {
 
     override func loadView() {
         // Create a basic view first
-        self.view = NSView(frame: NSRect(x: 0, y: 0, width: 400, height: 350))
+        // Height increased to 420 to prevent content cutoff with longer titles (e.g., tweets)
+        self.view = NSView(frame: NSRect(x: 0, y: 0, width: 400, height: 420))
     }
 
     override func viewDidLoad() {
