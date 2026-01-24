@@ -1,5 +1,5 @@
 # Continuity Ledger: Brief App Store Release
-Updated: 2026-01-23T10:30:00.000Z
+Updated: 2026-01-24T11:47:30.952Z
 
 ## Goal
 ~~Streamline the Brief project and prepare iOS/macOS app for TestFlight submission.~~
