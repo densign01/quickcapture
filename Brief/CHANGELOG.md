@@ -5,10 +5,11 @@ All notable changes to the Brief iOS app.
 ## [Unreleased]
 
 ### Added
-- **Send History** - View recently sent articles on the home screen
+- **Send History** - Swipe left to view recently sent articles
 - Tap any history item to open in in-app Safari browser
 - History syncs between main app and Share Extension
 - Stores last 100 articles
+- Auto-refresh history when returning from background
 
 ### Changed
 - Theme colors moved to shared Theme.swift file
