@@ -20,3 +20,16 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Claude Code
+.claude/
+
+# Xcode user data
+xcuserdata/
+*.xcuserstate
+
+# Claude thoughts/planning (local only)
+thoughts/
+
+# Debug logs
+firebase-debug.log
